@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gargi Hostel Store - Your Daily Essentials, Delivered.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom Styles for animations and gradients -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8fafc; /* A very light grey */
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Add delays for staggered animation */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="absolute top-0 left-0 w-full z-10 p-6">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">Gargi Hostel Store</h1>
+            <a href="store.html" class="bg-white text-blue-600 font-semibold px-5 py-2 rounded-full hover:bg-gray-200 transition">Log In</a>            
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white pt-32 pb-20 md:pt-48 md:pb-32">
+        <div class="container mx-auto text-center px-6">
+            <h2 class="text-4xl md:text-6xl font-extrabold leading-tight fade-in-up">Late-night cravings? Last-minute notes?</h2>
+            <p class="text-lg md:text-xl mt-4 max-w-3xl mx-auto fade-in-up delay-1">Your personal tuck shop, delivered right to your hostel room. Fast, easy, and always there when you need it.</p>
+            <a href="store.html" class="mt-8 inline-block bg-white text-blue-700 font-bold text-lg px-10 py-4 rounded-full transform hover:scale-105 transition-transform shadow-lg fade-in-up delay-2">
+                Shop Now &rarr;
+            </a>
+        </div>
+    </section>
+
+    <!-- "Why Choose Us?" Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto text-center px-6">
+            <h3 class="text-3xl font-bold mb-2">The Gargi Advantage</h3>
+            <p class="text-gray-600 mb-12">We're more than just a store; we're a part of the hostel life.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Stat 1 -->
+                <div class="fade-in-up delay-1">
+                    <div class="text-5xl font-extrabold text-blue-600">99%</div>
+                    <p class="font-semibold mt-2">On-Time Delivery</p>
+                    <p class="text-gray-500 text-sm">We pride ourselves on getting your order to you exactly when we promise.</p>
+                </div>
+                <!-- Stat 2 -->
+                <div class="fade-in-up delay-2">
+                    <div class="text-5xl font-extrabold text-blue-600">2,000+</div>
+                    <p class="font-semibold mt-2">Happy Students Served</p>
+                    <p class="text-gray-500 text-sm">Join a community of students who rely on us for their daily needs.</p>
+                </div>
+                <!-- Stat 3 -->
+                <div class="fade-in-up delay-3">
+                    <div class="text-5xl font-extrabold text-blue-600">Under 15 Mins</div>
+                    <p class="font-semibold mt-2">Average Delivery Time</p>
+                    <p class="text-gray-500 text-sm">Lightning-fast delivery means you get what you need, right when you need it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- "How It Works" Section -->
+    <section class="py-20">
+        <div class="container mx-auto text-center px-6">
+            <h3 class="text-3xl font-bold mb-12">Get Started in 3 Easy Steps</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Step 1 -->
+                <div class="fade-in-up delay-2">
+                    <div class="bg-blue-100 text-blue-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">1</div>
+                    <h4 class="text-xl font-bold mt-6 mb-2">Create Your Account</h4>
+                    <p class="text-gray-600">A quick one-time setup gives you access to our full catalog.</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="fade-in-up delay-3">
+                    <div class="bg-blue-100 text-blue-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">2</div>
+                    <h4 class="text-xl font-bold mt-6 mb-2">Browse & Order</h4>
+                    <p class="text-gray-600">Fill your cart with snacks, drinks, stationery, and more.</p>
+                </div>
+                <!-- Step 3 -->
+                <div class="fade-in-up delay-4">
+                    <div class="bg-blue-100 text-blue-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">3</div>
+                    <h4 class="text-xl font-bold mt-6 mb-2">Instant Room Delivery</h4>
+                    <p class="text-gray-600">Sit back and relax. We'll bring your order right to your door.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h3 class="text-3xl font-bold text-center mb-12">What Our Friends Are Saying</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-100 p-8 rounded-xl fade-in-up delay-2">
+                    <p class="text-gray-700">"Gargi Store is a lifesaver! I ordered Maggi and a notebook at 1 AM during exams and got it in 10 minutes. Absolutely essential for hostel life."</p>
+                    <p class="font-bold text-right mt-4">- Vivek Singh.</p>
+                </div>
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-100 p-8 rounded-xl fade-in-up delay-3">
+                    <p class="text-gray-700">"The website is so easy to use, and the delivery is unbelievably fast. No more walking to the campus shop for a cold drink. 10/10 service!"</p>
+                    <p class="font-bold text-right mt-4">- Vaibhav.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="hero-gradient text-white">
+        <div class="container mx-auto text-center py-20 px-6">
+            <h3 class="text-4xl font-bold fade-in-up">Ready to Make Hostel Life Easier?</h3>
+            <p class="mt-4 text-lg fade-in-up delay-1">Create your account today and experience the convenience.</p>
+            <a href="store.html" class="mt-8 inline-block bg-white text-blue-700 font-bold text-lg px-10 py-4 rounded-full transform hover:scale-105 transition-transform shadow-lg fade-in-up delay-2">
+                Create an Account
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto text-center text-sm">
+            <p>&copy; 2025 Gargi Hostel Store. All Rights Reserved.</p>
+            <p class="mt-2">Made with ❤️ by ADITYA.</p>
+            
+        </div>
+    </footer>
+
+</body>
+</html>
