@@ -34,11 +34,19 @@
         <header class="text-center mb-8 md:mb-12">
             <div class="flex justify-between items-center mb-4">
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900">Gargi Hostel Store</h1>
-                <button id="my-orders-button" class="bg-white border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition">My Orders</button>
+                <div class="flex gap-2">
+                    <button id="my-orders-button" class="bg-white border border-gray-300 text-gray-700 font-semibold px-4 py-2 rounded-full hover:bg-gray-100 transition">My Orders</button>
+                    <button id="logout-button" class="bg-red-100 border border-red-300 text-red-700 font-semibold px-4 py-2 rounded-full hover:bg-red-200 transition" title="Logout">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
             <p class="text-lg text-gray-600">Welcome, <span id="welcome-name" class="font-semibold text-blue-600">Guest</span>!</p>
             <div class="mt-2 text-xs text-gray-500">
                 Logged in as: <span id="user-email" class="font-mono bg-gray-200 p-1 rounded">loading...</span>
+                <span id="connection-status" class="ml-2 px-2 py-1 rounded text-xs bg-green-100 text-green-800">●Online</span>
             </div>
         </header>
 
@@ -70,13 +78,13 @@
                 <h2 id="form-title" class="text-2xl font-bold mb-6 text-center">Login</h2>
                 <form id="auth-form" class="space-y-4">
                     <div id="name-field-container" class="hidden space-y-4">
-                        <input type="text" id="student-name" placeholder="Your Full Name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                        <input type="tel" id="student-phone" placeholder="Your Phone Number" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <input type="text" id="student-name" placeholder="Your Full Name" minlength="2" maxlength="50" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <input type="tel" id="student-phone" placeholder="Your Phone Number (10 digits)" pattern="[6-9][0-9]{9}" maxlength="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
-                    <input type="email" id="auth-email" placeholder="Email Address" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                    <input type="password" id="auth-password" placeholder="Password" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    <input type="email" id="auth-email" placeholder="Email Address" required autocomplete="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="password" id="auth-password" placeholder="Password (min 6 characters)" required minlength="6" autocomplete="current-password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     
-                    <button id="auth-submit-button" type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition">Login</button>
+                    <button id="auth-submit-button" type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed">Login</button>
                 </form>
                 <p class="text-center text-sm text-gray-600 mt-6">
                     <span id="toggle-text">Don't have an account?</span>
@@ -100,7 +108,8 @@
             <div class="p-6 bg-gray-50 border-t border-gray-200">
                  <div class="mb-4">
                      <label for="room-number" class="block text-sm font-medium text-gray-700 mb-1">Room Number for Delivery</label>
-                     <input type="text" id="room-number" placeholder="e.g., B-204" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                     <input type="text" id="room-number" placeholder="e.g., B-204, A123, C-105" required maxlength="10" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" autocomplete="off">
+                     <p class="text-xs text-gray-500 mt-1">Enter your hostel room number</p>
                  </div>
                  <div class="flex justify-between items-center mb-4">
                     <span class="text-lg font-semibold text-gray-700">Total:</span>
@@ -143,12 +152,7 @@
         // --- 1. CONFIGURATION & INITIALIZATION ---
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'hostel-store-app';
         const firebaseConfig = {
-  apiKey: "your api",
-  authDomain: "your domain",
-  projectId: "my-hostel-store",
-  storageBucket: "your storage",
-  messagingSenderId: "639080703365",
-  appId: "1:your id"
+  your firebase config
 };
 
         let app, auth, db, userDetails;
@@ -167,6 +171,8 @@
         const cartTotalEl = document.getElementById('cart-total');
         const userEmailEl = document.getElementById('user-email');
         const welcomeNameEl = document.getElementById('welcome-name');
+        const logoutButton = document.getElementById('logout-button');
+        const connectionStatusEl = document.getElementById('connection-status');
         
         // Modals & Buttons
         const loginModal = document.getElementById('login-modal');
@@ -197,33 +203,57 @@
                 auth = getAuth(app);
 
                 onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        await fetchUserDetails(user.uid);
-                        listenToOrders(user.uid);
-                    } else {
-                        loginModal.classList.remove('hidden');
-                        if (unsubscribeOrders) unsubscribeOrders(); // Stop listening if user logs out
+                    try {
+                        if (user) {
+                            await fetchUserDetails(user.uid);
+                            listenToOrders(user.uid);
+                        } else {
+                            loginModal.classList.remove('hidden');
+                            if (unsubscribeOrders) unsubscribeOrders(); // Stop listening if user logs out
+                        }
+                    } catch (error) {
+                        console.error("Error in auth state change:", error);
+                        showMessage("An error occurred while loading your profile. Please refresh the page.");
+                        auth.signOut(); // Sign out on profile loading error
                     }
                 });
             } catch (error) {
                 console.error("Firebase initialization failed:", error);
-                showMessage("Could not connect to the store. Please refresh the page.");
+                showMessage("Could not connect to the store. Please check your internet connection and refresh the page.");
             }
         }
 
         async function fetchUserDetails(uid) {
-            const userRef = doc(db, `/artifacts/${appId}/public/data/users`, uid);
-            const docSnap = await getDoc(userRef);
+            try {
+                console.log("Attempting to fetch user details for UID:", uid);
+                console.log("Database path:", `/artifacts/${appId}/public/data/users/${uid}`);
+                
+                const userRef = doc(db, `/artifacts/${appId}/public/data/users`, uid);
+                const docSnap = await getDoc(userRef);
 
-            if (docSnap.exists()) {
-                userDetails = { uid, ...docSnap.data() };
-                welcomeNameEl.textContent = userDetails.name.split(' ')[0];
-                userEmailEl.textContent = userDetails.email;
-                loginModal.classList.add('hidden');
-                loadProducts();
-            } else {
-                console.warn("User document not found for UID:", uid);
-                showMessage("Could not find your user details. Please sign up again.");
+                if (docSnap.exists()) {
+                    userDetails = { uid, ...docSnap.data() };
+                    console.log("User details loaded successfully:", userDetails);
+                    welcomeNameEl.textContent = userDetails.name.split(' ')[0];
+                    userEmailEl.textContent = userDetails.email;
+                    loginModal.classList.add('hidden');
+                    loadProducts();
+                } else {
+                    console.warn("User document not found for UID:", uid);
+                    console.log("Document path checked:", userRef.path);
+                    showMessage("Could not find your user details. Please sign up again.");
+                    auth.signOut();
+                }
+            } catch (error) {
+                console.error("Error fetching user details:", error);
+                console.error("Error code:", error.code);
+                console.error("Error message:", error.message);
+                
+                if (error.code === 'permission-denied') {
+                    showMessage("Database permission error. Please contact support or check Firestore rules.");
+                } else {
+                    showMessage("Failed to load your profile. Please try logging in again.");
+                }
                 auth.signOut();
             }
         }
@@ -237,38 +267,142 @@
             nameFieldContainer.classList.toggle('hidden', !isSignUp);
         }
 
+        // Helper function to validate email format
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Helper function to validate password strength
+        function isValidPassword(password) {
+            return password.length >= 6; // Firebase requires at least 6 characters
+        }
+
+        // Helper function to validate phone number
+        function isValidPhone(phone) {
+            const phoneRegex = /^[6-9]\d{9}$/; // Indian mobile number format
+            return phoneRegex.test(phone);
+        }
+
+        // Helper function to get user-friendly error messages
+        function getUserFriendlyErrorMessage(error) {
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    return 'This email is already registered. Please try logging in instead or use a different email.';
+                case 'auth/invalid-credential':
+                    return 'Invalid email or password. Please check your credentials and try again.';
+                case 'auth/user-not-found':
+                    return 'No account found with this email. Please sign up first.';
+                case 'auth/wrong-password':
+                    return 'Incorrect password. Please try again.';
+                case 'auth/invalid-email':
+                    return 'Please enter a valid email address.';
+                case 'auth/weak-password':
+                    return 'Password should be at least 6 characters long.';
+                case 'auth/too-many-requests':
+                    return 'Too many failed attempts. Please try again later.';
+                case 'auth/network-request-failed':
+                    return 'Network error. Please check your internet connection.';
+                default:
+                    return error.message || 'An unexpected error occurred. Please try again.';
+            }
+        }
+
         async function handleAuthSubmit(e) {
             e.preventDefault();
-            const email = document.getElementById('auth-email').value;
+            const email = document.getElementById('auth-email').value.trim();
             const password = document.getElementById('auth-password').value;
-            const name = document.getElementById('student-name').value;
-            const phone = document.getElementById('student-phone').value;
+            const name = document.getElementById('student-name').value.trim();
+            const phone = document.getElementById('student-phone').value.trim();
+
+            // Basic validation
+            if (!email || !password) {
+                showMessage("Please enter both email and password.");
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showMessage("Please enter a valid email address.");
+                return;
+            }
+
+            if (!isValidPassword(password)) {
+                showMessage("Password must be at least 6 characters long.");
+                return;
+            }
+
+            if (isSignUp) {
+                if (!name || !phone) {
+                    showMessage("Please enter your name and phone number.");
+                    return;
+                }
+
+                if (name.length < 2) {
+                    showMessage("Please enter a valid name (at least 2 characters).");
+                    return;
+                }
+
+                if (!isValidPhone(phone)) {
+                    showMessage("Please enter a valid 10-digit mobile number.");
+                    return;
+                }
+            }
 
             authSubmitButton.disabled = true;
+            authSubmitButton.textContent = isSignUp ? "Creating Account..." : "Signing In...";
 
             try {
                 if (isSignUp) {
-                    if (!name || !phone) {
-                        showMessage("Please enter your name and phone number.");
-                        authSubmitButton.disabled = false;
-                        return;
-                    }
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     const user = userCredential.user;
                     
-                    const newUserDetails = { name, email, phone };
+                    const newUserDetails = { name, email, phone, createdAt: serverTimestamp() };
                     const userDocRef = doc(db, `/artifacts/${appId}/public/data/users`, user.uid);
                     await setDoc(userDocRef, newUserDetails);
                     
                     await fetchUserDetails(user.uid);
+                    showMessage("Account created successfully! Welcome to Gargi Hostel Store.");
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
+                    showMessage("Welcome back!");
                 }
+
+                // Clear form after successful authentication
+                document.getElementById('auth-form').reset();
+
             } catch (error) {
                 console.error("Authentication error:", error);
-                showMessage(error.message);
+                const friendlyMessage = getUserFriendlyErrorMessage(error);
+                showMessage(friendlyMessage);
+                
+                // Special handling for email-already-in-use error
+                if (error.code === 'auth/email-already-in-use' && isSignUp) {
+                    setTimeout(() => {
+                        toggleAuthMode(); // Switch to login mode
+                        document.getElementById('auth-email').value = email;
+                        showMessage("Switched to login mode. Please enter your password.");
+                    }, 2000);
+                }
             } finally {
                 authSubmitButton.disabled = false;
+                authSubmitButton.textContent = isSignUp ? "Sign Up" : "Login";
+            }
+        }
+
+        // Logout functionality
+        function handleLogout() {
+            if (confirm("Are you sure you want to logout?")) {
+                auth.signOut().then(() => {
+                    cart = {};
+                    updateCartUI();
+                    userDetails = null;
+                    welcomeNameEl.textContent = "Guest";
+                    userEmailEl.textContent = "loading...";
+                    showMessage("You have been logged out successfully.");
+                }).catch((error) => {
+                    console.error("Error during logout:", error);
+                    showMessage("Error logging out. Please try again.");
+                });
             }
         }
 
@@ -386,13 +520,29 @@
         // --- 4. ORDER MANAGEMENT ---
 
         async function onPlaceOrder() {
-            const roomNumber = document.getElementById('room-number').value;
+            const roomNumber = document.getElementById('room-number').value.trim();
+            const placeOrderButton = document.getElementById('place-order-button');
+            
+            // Validation
             if (!roomNumber) {
                 showMessage("Please enter your room number for delivery.");
                 return;
             }
+            
+            // Validate room number format (basic check)
+            if (!/^[A-Za-z]?-?\d+[A-Za-z]?$/i.test(roomNumber)) {
+                showMessage("Please enter a valid room number (e.g., B-204, A123, etc.)");
+                return;
+            }
+            
             if (Object.keys(cart).length === 0) {
                 showMessage("Your cart is empty.");
+                return;
+            }
+            
+            // Check network connectivity
+            if (!checkNetworkConnection()) {
+                showMessage("No internet connection. Please check your connection and try again.");
                 return;
             }
             
@@ -400,25 +550,50 @@
             const orderData = {
                 orderedByName: userDetails.name,
                 orderedByUID: userDetails.uid,
-                phone: userDetails.phone || "Not Provided", // FIX: Provide a default value
-                roomNumber,
+                phone: userDetails.phone || "Not Provided",
+                roomNumber: roomNumber.toUpperCase(), // Standardize room number format
                 items: cart,
                 totalAmount,
                 status: 'Pending',
                 createdAt: serverTimestamp(),
             };
             
+            // Disable button and show loading state
+            placeOrderButton.disabled = true;
+            placeOrderButton.textContent = "Placing Order...";
+            placeOrderButton.classList.add('opacity-50');
+            
             try {
-                await addDoc(collection(db, `/artifacts/${appId}/public/data/orders`), orderData);
+                // Use retry mechanism for network failures
+                await retryOperation(async () => {
+                    return await addDoc(collection(db, `/artifacts/${appId}/public/data/orders`), orderData);
+                });
+                
                 cartModal.classList.add('hidden');
-                showMessage("🎉 Order Placed Successfully!");
+                showMessage("🎉 Order Placed Successfully! We'll deliver it to room " + roomNumber.toUpperCase());
                 cart = {};
                 updateCart();
                 document.querySelectorAll('[data-product-id]').forEach(card => updateProductCardUI(card.dataset.productId));
                 document.getElementById('room-number').value = '';
+                
             } catch (error) {
                 console.error("Error placing order: ", error);
-                showMessage("Could not place your order. Please try again.");
+                let errorMessage = "Could not place your order. Please try again.";
+                
+                if (error.code === 'permission-denied') {
+                    errorMessage = "You don't have permission to place orders. Please contact support.";
+                } else if (error.code === 'unavailable') {
+                    errorMessage = "Service temporarily unavailable. Please try again in a moment.";
+                } else if (!checkNetworkConnection()) {
+                    errorMessage = "Network connection lost. Please check your internet and try again.";
+                }
+                
+                showMessage(errorMessage);
+            } finally {
+                // Re-enable button
+                placeOrderButton.disabled = false;
+                placeOrderButton.textContent = "Place Order";
+                placeOrderButton.classList.remove('opacity-50');
             }
         }
 
@@ -502,6 +677,73 @@
             messageModal.classList.remove('hidden');
         }
 
+        // Add loading state management
+        function showLoading(isLoading) {
+            const submitButton = document.getElementById('auth-submit-button');
+            if (isLoading) {
+                submitButton.disabled = true;
+                submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                submitButton.disabled = false;
+                submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // Add network connectivity check
+        function checkNetworkConnection() {
+            return navigator.onLine;
+        }
+
+        // Update connection status UI
+        function updateConnectionStatus() {
+            const isOnline = checkNetworkConnection();
+            if (connectionStatusEl) {
+                if (isOnline) {
+                    connectionStatusEl.textContent = '●Online';
+                    connectionStatusEl.className = 'ml-2 px-2 py-1 rounded text-xs bg-green-100 text-green-800';
+                } else {
+                    connectionStatusEl.textContent = '●Offline';
+                    connectionStatusEl.className = 'ml-2 px-2 py-1 rounded text-xs bg-red-100 text-red-800';
+                }
+            }
+        }
+
+        // Monitor network connection
+        function setupConnectionMonitoring() {
+            updateConnectionStatus();
+            
+            window.addEventListener('online', () => {
+                updateConnectionStatus();
+                showMessage('Connection restored!');
+            });
+            
+            window.addEventListener('offline', () => {
+                updateConnectionStatus();
+                showMessage('Connection lost. Some features may not work.');
+            });
+        }
+
+        // Add retry mechanism for failed operations
+        async function retryOperation(operation, maxRetries = 3, delay = 1000) {
+            for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                try {
+                    return await operation();
+                } catch (error) {
+                    if (attempt === maxRetries) {
+                        throw error;
+                    }
+                    
+                    // Check if it's a network error
+                    if (error.code === 'auth/network-request-failed' || !checkNetworkConnection()) {
+                        await new Promise(resolve => setTimeout(resolve, delay * attempt));
+                        continue;
+                    }
+                    
+                    throw error; // Re-throw non-network errors immediately
+                }
+            }
+        }
+
         // Event Listeners
         authForm.addEventListener('submit', handleAuthSubmit);
         authToggleButton.addEventListener('click', toggleAuthMode);
@@ -511,11 +753,12 @@
         closeOrdersModalButton.addEventListener('click', () => ordersModal.classList.add('hidden'));
         document.getElementById('place-order-button').addEventListener('click', onPlaceOrder);
         closeMessageModalButton.addEventListener('click', () => messageModal.classList.add('hidden'));
+        logoutButton.addEventListener('click', handleLogout);
 
         // Start the application
         initialize();
+        setupConnectionMonitoring();
 
     </script>
 </body>
 </html>
-
